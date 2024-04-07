@@ -1,17 +1,16 @@
-
 package cwk4;
 
 public class Champion {
     private String name;
     private int joiningFee;
-    private final String state;
+    private String state;
     private int skillLevel;
     private boolean canMagic;
     private boolean canFight;
     private boolean canMystery;
-    public Champion(int fee, String state, int skill, boolean isMagic, boolean isFight, boolean isMystery, String name){
+    public Champion(int fee, int skill, boolean isMagic, boolean isFight, boolean isMystery, String name){
         joiningFee = fee;
-        this.state = state;
+        state = "Waiting";
         skillLevel = skill;
         canMagic = isMagic;
         canFight = isFight;
@@ -25,6 +24,14 @@ public class Champion {
 
     public void setJoiningFee(int fee){
         this.joiningFee = fee;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String toString(){

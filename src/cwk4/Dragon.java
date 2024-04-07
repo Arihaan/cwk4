@@ -2,8 +2,8 @@ package cwk4;
 
 public class Dragon extends Champion{
     private boolean isTalking;
-    public Dragon(String name, boolean isTalking, String state, boolean isMagic, boolean isFight, boolean isMystery){
-        super(500, state, 7, isMagic, isFight, isMystery, name);
+    public Dragon(String name, boolean isTalking, String state){
+        super(500, 7, false, true, isTalking, name);
         this.isTalking = isTalking;
     }
 
@@ -11,11 +11,5 @@ public class Dragon extends Champion{
     public String toString() {
         return super.toString() +
                 "Is Talking: " + isTalking + "\n";
-    }
-
-    public static void main(String[] args)
-    {
-        Champion wiz = new Dragon("Mate", true, "Waiting", true, true, true);
-        System.out.println(wiz);
     }
 }
