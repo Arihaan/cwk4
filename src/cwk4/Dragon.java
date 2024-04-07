@@ -2,7 +2,7 @@ package cwk4;
 
 public class Dragon extends Champion{
     private boolean isTalking;
-    public Dragon(String name, boolean isTalking, String state){
+    public Dragon(String name, boolean isTalking){
         super(500, 7, false, true, isTalking, name);
         this.isTalking = isTalking;
     }
