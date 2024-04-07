@@ -4,7 +4,7 @@ import java.io.*;
 /**
  * Enumeration class ChallengeType - list possible types of challenges
  * 
- * @author A.A.Marczyk
+ * @author Hardik
  * @version 01/03/2024
  */
 public enum ChallengeType implements Serializable
