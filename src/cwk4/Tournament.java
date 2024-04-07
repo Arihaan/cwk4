@@ -5,8 +5,8 @@ import java.io.*;
  * This interface specifies the behaviour expected from CARE
  * as required for 5COM2007 Cwk 4
  * 
- * @author 
- * @version 
+ * @author Team 21
+ * @version 1.0
  */
 
 public class Tournament implements CARE
