@@ -5,8 +5,8 @@ import java.io.*;
  * This interface specifies the behaviour expected from CARE
  * as required for 5COM2007 Cwk 4
  * 
- * @author 
- * @version 
+ * @author Team 21
+ * @version 1.0
  */
 
 public class Tournament implements CARE
@@ -60,7 +60,7 @@ public class Tournament implements CARE
     
     /** returns true if Treasury <=0 and the vizier's team has no 
      * champions which can be retired. 
-     * @returns true if Treasury <=0 and the vizier's team has no 
+     * @return true if Treasury <=0 and the vizier's team has no
      * champions which can be retired. 
      */
     public boolean isDefeated()
@@ -69,7 +69,7 @@ public class Tournament implements CARE
     }
     
     /** returns the amount of money in the Treasury
-     * @returns the amount of money in the Treasury
+     * @return the amount of money in the Treasury
      */
     public int getMoney()
     {
@@ -239,12 +239,22 @@ public class Tournament implements CARE
     {
         
 
-   }
+    }
      
     private void setupChallenges()
     {
-
-
+        Challenge challenge1 = new Challenge(1, "Magic", "Borg", 3, 100);
+        Challenge challenge2 = new Challenge(2, "Fight", "Huns", 3, 120);
+        Challenge challenge3 = new Challenge(3, "Mystery", "Ferengi", 3, 150);
+        Challenge challenge4 = new Challenge(4, "Magic", "Vandal", 9, 200);
+        Challenge challenge5 = new Challenge(5, "Mystery", "Borg", 7, 90);
+        Challenge challenge6 = new Challenge(6, "Fight", "Goth", 8, 45);
+        Challenge challenge7 = new Challenge(7, "Magic", "Frank", 10, 200);
+        Challenge challenge8 = new Challenge(8, "Fight", "Sith", 10, 170);
+        Challenge challenge9 = new Challenge(9, "Mystery", "Cardashian", 9, 300);
+        Challenge challenge10 = new Challenge(10, "Fight", "Jute", 2, 300);
+        Challenge challenge11 = new Challenge(11, "Magic", "Celt", 2, 250);
+        Challenge challenge12 = new Challenge(12, "Mystery", "Celt", 1, 250);
     }
         
     // Possible useful private methods
