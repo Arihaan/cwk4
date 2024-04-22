@@ -11,9 +11,16 @@ import java.io.*;
 
 public class Tournament implements CARE
 {
-   
+
+    // name of the vizier
     private String vizier;
 
+    // treasury, i.e. amount of gulden that the vizier has
+    private int treasury;
+
+    // collections for the challenges, waiting list for the champions and the vizier's team
+    private ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
+    private HashMap<String, Champion> championHashMap = new HashMap<String, Champion>();
 
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
@@ -73,7 +80,7 @@ public class Tournament implements CARE
      */
     public int getMoney()
     {
-        return 0;
+        return treasury;
     }
     
     
@@ -94,9 +101,13 @@ public class Tournament implements CARE
      **/
     public String getChampionDetails(String nme)
     {
-       
-        return "\nNo such champion";
-    }    
+       Champion champ = championHashMap.get(nme);
+       if (champ != null) {
+           return champ.toString();
+       } else {
+           return "\nNo such champion";
+       }
+    }
     
     /** returns whether champion is in reserve
     * @param nme champion's name
@@ -177,12 +188,12 @@ public class Tournament implements CARE
     
 //**********************Challenges************************* 
     /** returns true if the number represents a challenge
-     * @param num is the  number of the challenge
-     * @return true if the  number represents a challenge
+     * @param num is the number of the challenge
+     * @return true if the number represents a challenge
      **/
      public boolean isChallenge(int num)
      {
-         return (false);
+         return num > 0 && num < challengeList.size();
      }    
    
     /** Provides a String representation of an challenge given by 
@@ -193,9 +204,11 @@ public class Tournament implements CARE
      **/
     public String getChallenge(int num)
     {
-        
-        
-        return "\nNo such challenge";
+        if (isChallenge(num)) {
+            return challengeList.get(num - 1).toString();
+        } else {
+            return "\nNo such challenge";
+        }
     }
     
     /** Provides a String representation of all challenges 
@@ -237,8 +250,31 @@ public class Tournament implements CARE
     //*******************************************************************************
     private void setupChampions()
     {
-        
+        Champion ganfrank = new Wizard("Ganfrank", "transmutation", true, 7);
+        Champion rudolf = new Wizard("Rudolf", "invisibility", true, 6);
+        Champion elblond = new Warrior("Elblond", "sword", 150);
+        Champion flimsi = new Warrior("Flimsi", "bow", 200);
+        Champion drabina = new Dragon("Drabina", false);
+        Champion golum = new Dragon("Golum", true);
+        Champion argon = new Warrior("Argon", "mace", 900);
+        Champion neon = new Wizard("Neon", "translocation", false, 2);
+        Champion xenon = new Dragon("Xenon", true);
+        Champion atlanta = new Warrior("Atlanta", "bow", 500);
+        Champion krypton = new Wizard("Krypton", "fireballs", false, 8);
+        Champion hedwig = new Wizard("Hedwig", "flying", true, 1);
 
+        championHashMap.put("ganfrank", ganfrank);
+        championHashMap.put("rudolf", rudolf);
+        championHashMap.put("elblond", elblond);
+        championHashMap.put("flimsi", flimsi);
+        championHashMap.put("drabina", drabina);
+        championHashMap.put("golum", golum);
+        championHashMap.put("argon", argon);
+        championHashMap.put("neon", neon);
+        championHashMap.put("xenon", xenon);
+        championHashMap.put("atlanta", atlanta);
+        championHashMap.put("krypton", krypton);
+        championHashMap.put("hedwig", hedwig);
     }
      
     private void setupChallenges()
@@ -255,6 +291,19 @@ public class Tournament implements CARE
         Challenge challenge10 = new Challenge(10, "Fight", "Jute", 2, 300);
         Challenge challenge11 = new Challenge(11, "Magic", "Celt", 2, 250);
         Challenge challenge12 = new Challenge(12, "Mystery", "Celt", 1, 250);
+
+        challengeList.add(challenge1);
+        challengeList.add(challenge2);
+        challengeList.add(challenge3);
+        challengeList.add(challenge4);
+        challengeList.add(challenge5);
+        challengeList.add(challenge6);
+        challengeList.add(challenge7);
+        challengeList.add(challenge8);
+        challengeList.add(challenge9);
+        challengeList.add(challenge10);
+        challengeList.add(challenge11);
+        challengeList.add(challenge12);
     }
         
     // Possible useful private methods
