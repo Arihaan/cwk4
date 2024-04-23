@@ -72,6 +72,10 @@ public class Champion {
         return false;
     }
 
+
+
+
+
     public String toString(){
         return "Champion: " + name + "\n" +
                 "Status: " + state + "\n" +

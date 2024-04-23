@@ -459,8 +459,7 @@ public class Tournament implements CARE
      * @param fname name of file storing requests
      */
    public void saveGame(String fname){
-        // uses object serialisation 
-        
+        // uses object serialisation
     }
  
 

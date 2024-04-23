@@ -16,6 +16,18 @@ public class Challenge {
         this.reward = reward;
     }
 
+    public int getReward() {
+        return reward;
+    }
+
+    public int getSkillLevel() {
+        return skillLevel;
+    }
+
+    public ChallengeType getChallengeType() {
+        return challengeType;
+    }
+
     public String toString()
     {
         String s;
