@@ -324,7 +324,33 @@ public class Tournament implements CARE
     {
         //Nothing said about accepting challenges when bust
         int outcome = -1 ;
-        
+        Challenge chlg = challengeList.get(chalNo);
+        ChallengeType Ctype = chlg.getChallengeType();
+        int level = chlg.getSkillLevel();
+        for (Champion Camp : championHashMap.values()){
+            int skill = Camp.getSkillLevel();
+            if (Camp.compareTypes(Ctype)){
+                if(skill >= level ){
+                    outcome = 0;
+                    treasury += chlg.getReward();
+                }
+                else {
+                    outcome = 1;
+                    ChampionState championState = ChampionState.DISQUALIFIED;
+                    treasury -= chlg.getReward();
+
+                }
+            }
+            else{
+                if (treasury == 0 && championHashMap.isEmpty()){
+                    outcome = 2;
+                }
+                else {
+                    treasury -= chlg.getReward();
+                    outcome = 3;
+                }
+            }
+        }
         return outcome;
     }
  
