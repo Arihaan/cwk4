@@ -28,9 +28,9 @@ public class Tournament implements CARE
      */  
     public Tournament(String viz)
     {
-
-       setupChampions();
-       setupChallenges();
+        vizier = viz;
+        setupChampions();
+        setupChallenges();
     }
     
     /** Constructor requires the name of the vizier and the
@@ -40,10 +40,9 @@ public class Tournament implements CARE
      */  
     public Tournament(String viz, String filename)  //Task 3.5
     {
-      
-        
-       setupChampions();
-       readChallenges(filename);
+        vizier = viz;
+        setupChampions();
+        readChallenges(filename);
     }
     
     
