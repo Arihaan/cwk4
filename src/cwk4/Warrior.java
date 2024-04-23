@@ -8,6 +8,10 @@ public class Warrior extends Champion{
         this.weapon = weapon;
     }
 
+    public String getWeapon() {
+        return weapon;
+    }
+
     @Override
     public String toString() {
         return super.toString() +

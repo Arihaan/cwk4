@@ -18,16 +18,40 @@ public class Champion {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getJoiningFee() {
+        return joiningFee;
+    }
+
+    public int getSkillLevel() {
+        return skillLevel;
+    }
+
+    public boolean isCanMagic() {
+        return canMagic;
+    }
+
+    public boolean isCanFight() {
+        return canFight;
+    }
+
+    public boolean isCanMystery() {
+        return canMystery;
+    }
+
+    public ChampionState getState() {
+        return state;
+    }
+
     public void setSkillLevel(int skillLevel){
         this.skillLevel = skillLevel;
     }
 
     public void setJoiningFee(int fee){
         this.joiningFee = fee;
-    }
-
-    public ChampionState getState() {
-        return state;
     }
 
     public void setState(ChampionState state) {

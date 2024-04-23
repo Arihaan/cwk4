@@ -9,6 +9,15 @@ public class Wizard extends Champion{
         this.spell = spell;
         this.isNecromant = isNecromant;
     }
+
+    public String getSpell() {
+        return spell;
+    }
+
+    public boolean isNecromant() {
+        return isNecromant;
+    }
+
     @Override
     public String toString() {
         return super.toString() +

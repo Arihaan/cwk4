@@ -7,6 +7,10 @@ public class Dragon extends Champion{
         this.isTalking = isTalking;
     }
 
+    public boolean isTalking() {
+        return isTalking;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
