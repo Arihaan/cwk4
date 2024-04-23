@@ -1,6 +1,8 @@
 package cwk4;
 
-public class Challenge {
+import java.io.Serializable;
+
+public class Challenge implements Serializable {
     private int challengeNo;
     private ChallengeType challengeType;
     private String enemy;
