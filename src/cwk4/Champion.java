@@ -58,6 +58,20 @@ public class Champion {
         this.state = state;
     }
 
+    public boolean compareTypes(ChallengeType type) {
+        if (type == ChallengeType.FIGHT) {
+            return isCanFight();
+        }
+        if (type == ChallengeType.MAGIC) {
+            return isCanMagic();
+        }
+        if (type == ChallengeType.MYSTERY) {
+            return isCanMystery();
+        }
+
+        return false;
+    }
+
     public String toString(){
         return "Champion: " + name + "\n" +
                 "Status: " + state + "\n" +
