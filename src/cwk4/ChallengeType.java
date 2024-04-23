@@ -22,15 +22,6 @@ public enum ChallengeType implements Serializable
         return type;
     }
 
-    public static void main(String[]args){
-        ChallengeType Challenge1= ChallengeType.MAGIC;
-        ChallengeType Challenge2= ChallengeType.FIGHT;
-        ChallengeType Challenge3= ChallengeType.MYSTERY;
-
-        System.out.println("Challenge Type 1:" + Challenge1);
-        System.out.println("Challenge Type 2:" + Challenge2);
-        System.out.println("Challenge Type 3:" + Challenge3);
-    }
 }
 
 

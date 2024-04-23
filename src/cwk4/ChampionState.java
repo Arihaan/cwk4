@@ -23,16 +23,6 @@ public enum ChampionState implements Serializable
         return state;
     }
 
-    public static void main(String[]args){
-        ChampionState Champion1= ChampionState.ENTERED;
-        ChampionState Champion2= ChampionState.DISQUALIFIED;
-        ChampionState Champion3= ChampionState.WAITING;
-
-        System.out.println("Champion State 1:" + Champion1);
-        System.out.println("Champion State 2:" + Champion2);
-        System.out.println("Champion State 3:" + Champion3);
-
-    }
 }
 
 

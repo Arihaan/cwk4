@@ -3,14 +3,14 @@ package cwk4;
 public class Champion {
     private String name;
     private int joiningFee;
-    private String state;
+    private ChampionState state;
     private int skillLevel;
     private boolean canMagic;
     private boolean canFight;
     private boolean canMystery;
     public Champion(int fee, int skill, boolean isMagic, boolean isFight, boolean isMystery, String name){
         joiningFee = fee;
-        state = "Waiting";
+        state = ChampionState.WAITING;
         skillLevel = skill;
         canMagic = isMagic;
         canFight = isFight;
@@ -26,11 +26,11 @@ public class Champion {
         this.joiningFee = fee;
     }
 
-    public String getState() {
+    public ChampionState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(ChampionState state) {
         this.state = state;
     }
 

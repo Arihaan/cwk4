@@ -279,18 +279,18 @@ public class Tournament implements CARE
      
     private void setupChallenges()
     {
-        Challenge challenge1 = new Challenge(1, "Magic", "Borg", 3, 100);
-        Challenge challenge2 = new Challenge(2, "Fight", "Huns", 3, 120);
-        Challenge challenge3 = new Challenge(3, "Mystery", "Ferengi", 3, 150);
-        Challenge challenge4 = new Challenge(4, "Magic", "Vandal", 9, 200);
-        Challenge challenge5 = new Challenge(5, "Mystery", "Borg", 7, 90);
-        Challenge challenge6 = new Challenge(6, "Fight", "Goth", 8, 45);
-        Challenge challenge7 = new Challenge(7, "Magic", "Frank", 10, 200);
-        Challenge challenge8 = new Challenge(8, "Fight", "Sith", 10, 170);
-        Challenge challenge9 = new Challenge(9, "Mystery", "Cardashian", 9, 300);
-        Challenge challenge10 = new Challenge(10, "Fight", "Jute", 2, 300);
-        Challenge challenge11 = new Challenge(11, "Magic", "Celt", 2, 250);
-        Challenge challenge12 = new Challenge(12, "Mystery", "Celt", 1, 250);
+        Challenge challenge1 = new Challenge(1, ChallengeType.MAGIC, "Borg", 3, 100);
+        Challenge challenge2 = new Challenge(2, ChallengeType.FIGHT, "Huns", 3, 120);
+        Challenge challenge3 = new Challenge(3, ChallengeType.MYSTERY, "Ferengi", 3, 150);
+        Challenge challenge4 = new Challenge(4, ChallengeType.MAGIC, "Vandal", 9, 200);
+        Challenge challenge5 = new Challenge(5, ChallengeType.MYSTERY, "Borg", 7, 90);
+        Challenge challenge6 = new Challenge(6, ChallengeType.FIGHT, "Goth", 8, 45);
+        Challenge challenge7 = new Challenge(7, ChallengeType.MAGIC, "Frank", 10, 200);
+        Challenge challenge8 = new Challenge(8, ChallengeType.FIGHT, "Sith", 10, 170);
+        Challenge challenge9 = new Challenge(9, ChallengeType.MYSTERY, "Cardashian", 9, 300);
+        Challenge challenge10 = new Challenge(10, ChallengeType.FIGHT, "Jute", 2, 300);
+        Challenge challenge11 = new Challenge(11, ChallengeType.MAGIC, "Celt", 2, 250);
+        Challenge challenge12 = new Challenge(12, ChallengeType.MYSTERY, "Celt", 1, 250);
 
         challengeList.add(challenge1);
         challengeList.add(challenge2);
