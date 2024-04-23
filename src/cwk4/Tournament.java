@@ -72,7 +72,12 @@ public class Tournament implements CARE
      */
     public boolean isDefeated()
     {
-        return false;
+        if (treasury == 0 && championHashMap.isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
     /** returns the amount of money in the Treasury
@@ -90,7 +95,9 @@ public class Tournament implements CARE
     public String getReserve()
     {   
         String s = "************ Champions available in reserves********";
-        
+        for (Champion chmp : championHashMap.values()) {
+            s += (chmp.toString()) + "\n";
+        }
         return s;
     }
     
@@ -115,7 +122,13 @@ public class Tournament implements CARE
     */
     public boolean isInReserve(String nme)
     {
-        return (false);
+        Champion champ = championHashMap.get(nme.toLowerCase());
+        if (champ != null && !isInViziersTeam(nme)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
  
     // ***************** Team champions ************************   
@@ -131,11 +144,50 @@ public class Tournament implements CARE
      **/        
     public int enterChampion(String nme)
     {
-        
-        return -1;
+        Champion champ = championHashMap.get(nme.toLowerCase());
+        if (champ == null) {
+            return -1; // no such champion
+        }
+
+        if (!isInReserve(nme)) {
+            return 1; // champion not in reserve
+        }
+
+        int entryFee = calculateEntryFee(champ);
+
+        if (entryFee > treasury) {
+            return 2; // not enough money in the treasury
+        }
+
+        // Update treasury and champion's state
+        treasury -= entryFee;
+
+        // Add logic for adding champion to vizier's team
+
+        return 0; // successfully entered champion
     }
-        
-     /** Returns true if the champion with the name is in 
+
+    private int calculateEntryFee(Champion champ) {
+        if (champ instanceof Wizard) {
+            Wizard wizard = (Wizard) champ;
+            int baseFee = 300;
+            if (wizard.isNecromant()) {
+                return baseFee + 100; // 400 gulden for necromancer wizards
+            } else {
+                return baseFee; // 300 gulden for regular wizards
+            }
+        } else if (champ instanceof Warrior) {
+            Warrior warrior = (Warrior) champ;
+            return warrior.getJoiningFee();
+        } else if (champ instanceof Dragon) {
+            return 500; // fixed entry fee for dragons
+        }
+
+        return 0;
+    }
+
+
+    /** Returns true if the champion with the name is in
      * the vizier's team, false otherwise.
      * @param nme is the name of the champion
      * @return returns true if the champion with the name
@@ -143,7 +195,7 @@ public class Tournament implements CARE
      **/
     public boolean isInViziersTeam(String nme)
     {
-        return false;
+        return championHashMap.containsKey(nme.toLowerCase());
     }
     
     /** Removes a champion from the team back to the reserves (if they are in the team)
@@ -157,7 +209,21 @@ public class Tournament implements CARE
      **/
     public int retireChampion(String nme)
     {
-        return -1;
+        Champion champ = championHashMap.get(nme.toLowerCase());
+
+        if (champ == null) {
+            return -1; // no such champion
+        }
+
+        if (!isInViziersTeam(nme)) {
+            return 2; // champion not in the vizier's team
+        }
+
+        // Logic to retire the champion from the vizier's team
+        // For this example, we'll remove the champion from the vizier's team (championHashMap)
+        championHashMap.remove(nme.toLowerCase());
+
+        return 0; // successfully retired champion
     }
     
     
@@ -169,8 +235,14 @@ public class Tournament implements CARE
     public String getTeam()
     {
         String s = "************ Vizier's Team of champions********";
-        
-       
+        if (championHashMap.isEmpty()) {
+            s += "\n"+"No champions entered";
+        }
+        else{
+            for (Champion chmp : championHashMap.values()) {
+                s += chmp.toString() + "\n" ;
+            }
+        }
         return s;
     }
     
@@ -181,8 +253,11 @@ public class Tournament implements CARE
     public String getDisqualified()
     {
         String s = "************ Vizier's Disqualified champions********";
-        
-        
+        for (Champion chmp : championHashMap.values()) {
+            if(chmp.getState() == ChampionState.DISQUALIFIED) {
+                s += chmp.toString() + "\n";
+            }
+        }
         return s;
     }
     
@@ -217,7 +292,15 @@ public class Tournament implements CARE
     public String getAllChallenges()
     {
         String s = "\n************ All Challenges ************\n";
-       
+        if (challengeList.isEmpty()) {
+            s += "No challenges available" + "\n";
+        }
+        else{
+            for (Challenge challenge : challengeList) {
+                s += challenge.toString()+ "\n";
+            }
+        }
+
         return s;
     }
     
