@@ -22,6 +22,7 @@ public class Wizard extends Champion{
     public String toString() {
         return super.toString() +
                 "Spell Speciality: " + spell + "\n" +
-                "Is Necromant: " + isNecromant + "\n";
+                "Is Necromant: " + isNecromant + "\n" +
+                "Champion: Wizard"          +       "\n";
     }
 }

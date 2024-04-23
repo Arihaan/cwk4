@@ -16,11 +16,14 @@ public class Tournament implements CARE
     private String vizier;
 
     // treasury, i.e. amount of gulden that the vizier has
-    private int treasury;
+    private int treasury = 1000;
 
     // collections for the challenges, waiting list for the champions and the vizier's team
     private ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
     private HashMap<String, Champion> championHashMap = new HashMap<String, Champion>();
+    private HashMap<String, Champion> reserveHashMap = new HashMap<String, Champion>();
+    private HashMap<String, Champion> disqualifiedHashMap = new HashMap<String, Champion>();
+    private HashMap<String, Champion> teamHashMap = new HashMap<String, Champion>();
 
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
@@ -58,7 +61,12 @@ public class Tournament implements CARE
      **/
     public String toString()
     {
-        String s = "\nVizier: " + vizier ;
+        String s = "\nVizier: " + vizier +
+                    "\nTreasury: " + treasury +
+                    "\n" + getReserve() +
+                    "\n" + getTeam() +
+                    "\n" + getDisqualified() +
+                    "\n" + getAllChallenges() ;
         
         return s;
     }
@@ -71,12 +79,7 @@ public class Tournament implements CARE
      */
     public boolean isDefeated()
     {
-        if (treasury == 0 && championHashMap.isEmpty()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return treasury == 0 && teamHashMap.isEmpty();
     }
     
     /** returns the amount of money in the Treasury
@@ -95,7 +98,7 @@ public class Tournament implements CARE
     {   
         String s = "************ Champions available in reserves********";
         for (Champion chmp : championHashMap.values()) {
-            s += (chmp.toString()) + "\n";
+            s += "\n" + (chmp.toString());
         }
         return s;
     }
@@ -107,7 +110,7 @@ public class Tournament implements CARE
      **/
     public String getChampionDetails(String nme)
     {
-       Champion champ = championHashMap.get(nme);
+       Champion champ = championHashMap.get(nme.toLowerCase());
        if (champ != null) {
            return champ.toString();
        } else {
@@ -194,7 +197,7 @@ public class Tournament implements CARE
      **/
     public boolean isInViziersTeam(String nme)
     {
-        return championHashMap.containsKey(nme.toLowerCase());
+        return teamHashMap.containsKey(nme.toLowerCase());
     }
     
     /** Removes a champion from the team back to the reserves (if they are in the team)
@@ -234,11 +237,11 @@ public class Tournament implements CARE
     public String getTeam()
     {
         String s = "************ Vizier's Team of champions********";
-        if (championHashMap.isEmpty()) {
+        if (teamHashMap.isEmpty()) {
             s += "\n"+"No champions entered";
         }
         else{
-            for (Champion chmp : championHashMap.values()) {
+            for (Champion chmp : teamHashMap.values()) {
                 s += chmp.toString() + "\n" ;
             }
         }
@@ -252,7 +255,10 @@ public class Tournament implements CARE
     public String getDisqualified()
     {
         String s = "************ Vizier's Disqualified champions********";
-        for (Champion chmp : championHashMap.values()) {
+        if (disqualifiedHashMap.isEmpty()) {
+            s += "\n"+"No champions disqualified";
+        }
+        for (Champion chmp : disqualifiedHashMap.values()) {
             if(chmp.getState() == ChampionState.DISQUALIFIED) {
                 s += chmp.toString() + "\n";
             }
