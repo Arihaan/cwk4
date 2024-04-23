@@ -445,27 +445,58 @@ public class Tournament implements CARE
      */
     public void readChallenges(String filename)
     { 
-        
-    }   
+        try {
+            reader = new BufferedReader(new FileReader(filename));
+            String line = reader.readLine();
+            while (line != null) {
+                readChallenge(line);
+                line = reader.readLine();
+            }
+        }
+        catch (Exception e) {e.printStackTrace();}
+    }
+
+    private void readChallenge(String line) {
+        StringTokenizer st = new StringTokenizer (line, ","); // comma-separated data
+        int chNo = Integer.parseInt(st.nextToken());
+        ChallengeType chType = ChallengeType.valueOf(st.nextToken());
+        String chName = st.nextToken();
+        int chLevel = Integer.parseInt(st.nextToken());
+        int chReward = Integer.parseInt(st.nextToken());
+        challengeList.add(new Challenge(chNo, chType, chName, chLevel, chReward));
+    }
     
      /** reads all information about the game from the specified file 
      * and returns a CARE reference to a Tournament object, or null
      * @param fname name of file storing the game
      * @return the game (as a Tournament object)
      */
-    public Tournament loadGame(String fname)
-    {   // uses object serialisation 
-       Tournament yyy = null;
-       
-       return yyy;
-   } 
+     public Tournament loadGame(String fname)
+    {   // uses object serialisation
+        Tournament tournament = null;
+        try {
+            FileInputStream fis = new FileInputStream(fname);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            tournament = (Tournament) ois.readObject();
+        }
+        catch (Exception e) {e.printStackTrace();}
+
+        return tournament;
+    }
    
    /** Writes whole game to the specified file
      * @param fname name of file storing requests
      */
-   public void saveGame(String fname){
+   public void saveGame(String fname)
+   {
         // uses object serialisation
-    }
+       try {
+           FileOutputStream fos = new FileOutputStream(fname);
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(this);
+       }
+       catch (Exception e) {e.printStackTrace();}
+   }
  
 
 }
