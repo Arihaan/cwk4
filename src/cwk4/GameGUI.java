@@ -48,14 +48,23 @@ public class GameGUI
         eastPanel.add(meetBtn);
         eastPanel.add(clearBtn);
         eastPanel.add(quitBtn);
-        
+        eastPanel.add(viewBtn);
+
         clearBtn.addActionListener(new ClearBtnHandler());
         meetBtn.addActionListener(new MeetBtnHandler());
         quitBtn.addActionListener(new QuitBtnHandler());
-        
+        viewBtn.addActionListener(new ViewStateHandler());
+
         meetBtn.setVisible(true);
         clearBtn.setVisible(true);
         quitBtn.setVisible(true);
+        viewBtn.setVisible(true);
+
+        // Create a JScrollPane and add the JTextArea to it
+        JScrollPane scrollPane = new JScrollPane(listing);
+        // Add the JScrollPane to the frame
+        myFrame.getContentPane().add(scrollPane);
+
         // building is done - arrange the components and show        
         myFrame.pack();
         myFrame.setVisible(true);
@@ -71,13 +80,31 @@ public class GameGUI
         
         // create the File menu
         JMenu championMenu = new JMenu("Champions");
+        JMenu challengeMenu = new JMenu("Challenges");
         menubar.add(championMenu);
-        
+        menubar.add(challengeMenu);
+
         JMenuItem listChampionItem = new JMenuItem("List Champions in reserve");
+        JMenuItem listTeamItem = new JMenuItem("List Team");
+        JMenuItem viewChampionItem = new JMenuItem("View Champion");
+        JMenuItem enterChampionItem = new JMenuItem("Enter Champion");
+
+        JMenuItem listChallengesItem = new JMenuItem("List All Challenges");
+
+        enterChampionItem.addActionListener(new EnterChampionHandler());
+        viewChampionItem.addActionListener(new ViewChampionHandler());
+        listTeamItem.addActionListener(new ListTeamHandler());
         listChampionItem.addActionListener(new ListReserveHandler());
+        
+        listChallengesItem.addActionListener(new ListAllChallengesHandler());
+
+        championMenu.add(enterChampionItem);
+        championMenu.add(viewChampionItem);
+        championMenu.add(listTeamItem);
         championMenu.add(listChampionItem);
 
- 
+        challengeMenu.add(listChallengesItem);
+
     }
     
     private class ListReserveHandler implements ActionListener
@@ -89,8 +116,33 @@ public class GameGUI
             listing.setText(xx);
         }
     }
-    
-   
+    private class ListAllChallengesHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            listing.setVisible(true);
+            String xx = gp.getAllChallenges();
+            listing.setText(xx);
+        }
+    }
+    private class ViewStateHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            listing.setVisible(true);
+            String xx = gp.toString();
+            listing.setText(xx);
+        }
+    }
+    private class ListTeamHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            listing.setVisible(true);
+            String xx = gp.getTeam();
+            listing.setText(xx);
+        }
+    }
     private class ClearBtnHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
@@ -98,7 +150,15 @@ public class GameGUI
             listing.setText(" ");
         }
     }
-    
+    private class ViewChampionHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) {
+            String championName = JOptionPane.showInputDialog("Champion name: ");
+            String result = gp.getChampionDetails(championName);
+
+            JOptionPane.showMessageDialog(myFrame,result);
+        }
+    }
     private class MeetBtnHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
@@ -119,7 +179,23 @@ public class GameGUI
             JOptionPane.showMessageDialog(myFrame,answer);    
         }
     }
-    
+    private class EnterChampionHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            String answer = "no such champion";
+            String inputValue = JOptionPane.showInputDialog("Champion name ?: ");
+            int result = gp.enterChampion(inputValue);
+            answer = switch (result) {
+                case 0 -> "champion successfully entered team";
+                case 1 -> "champion is not in reserve";
+                case 2 -> "not enough money in the treasury";
+                default -> answer;
+            };
+
+            JOptionPane.showMessageDialog(myFrame,answer);
+        }
+    }
     private class QuitBtnHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
