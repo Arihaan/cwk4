@@ -447,7 +447,7 @@ public class Tournament implements CARE
     public void readChallenges(String filename)
     { 
         try {
-            reader = new BufferedReader(new FileReader(filename));
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line = reader.readLine();
             while (line != null) {
                 readChallenge(line);
