@@ -48,21 +48,33 @@ public class GameUI
                 {   
                     // provide code here
                     // output should be meaningful
-
+                    System.out.println("Enter Champion name");
+                    String ref = (myIn.nextLine()).trim();
+                    String out = processEnterChampionResult(tr.enterChampion(ref));
+                    System.out.println(out);
                 }
                 else if (choice == 5)
                 {
                     // provide code here
                     // output should be meaningful
+                    System.out.println("Enter Challenge number");
+                    int ref = myIn.nextInt();
+                    String out = processChallengeResult(tr.meetChallenge(ref));
+                    System.out.println(out);
                 }
                 else if (choice==6)
                 {
                     // provide code here
                     // output should be meaningful
+                    System.out.println("Enter Champion name to retire");
+                    String ref = (myIn.nextLine()).trim();
+                    String out = processRetirementResult(tr.retireChampion(ref));
+                    System.out.println(out);
                 }  
                 else if (choice==7)
                 {
                     // provide code here
+                    System.out.println(tr);
                 }
                 else if (choice==8)
                 {
@@ -150,7 +162,45 @@ public class GameUI
         }
         return out; 
     }
-    
+
+    private String processEnterChampionResult(int res) {
+        String out;
+        if (res == -1) {
+            out = "No such champion";
+        }
+        if(res == 0) {
+            out = "Champion successfully entered team";
+        }
+        if (res == 1) {
+            out = "Champion is not in reserve";
+        }
+        if (res == 2) {
+            out = "Not enough money in the treasury";
+        } else {
+            out = "No such result";
+        }
+        return out;
+    }
+
+    private String processRetirementResult(int res) {
+        String out;
+        if (res == -1) {
+            out = "No such champion";
+        }
+        if (res == 0) {
+            out = "Champion is retired to reserves";
+        }
+        if (res == 1) {
+            out = "Champion you are trying to retire is disqualified";
+        }
+        if (res == 2) {
+            out = "Champion you are trying to retire is not in your team";
+        }
+        else {
+            out = "No such result";
+        }
+        return out;
+    }
     public static void main(String[] args)
     {
         new GameUI().runGame();
