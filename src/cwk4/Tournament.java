@@ -20,7 +20,6 @@ public class Tournament implements CARE
 
     // collections for the challenges, waiting list for the champions and the vizier's team
     private ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
-    private HashMap<String, Champion> championHashMap = new HashMap<String, Champion>();
     private HashMap<String, Champion> reserveHashMap = new HashMap<String, Champion>();
     private HashMap<String, Champion> disqualifiedHashMap = new HashMap<String, Champion>();
     private HashMap<String, Champion> teamHashMap = new HashMap<String, Champion>();
@@ -97,7 +96,7 @@ public class Tournament implements CARE
     public String getReserve()
     {   
         String s = "************ Champions available in reserves********";
-        for (Champion chmp : championHashMap.values()) {
+        for (Champion chmp : reserveHashMap.values()) {
             s += "\n" + (chmp.toString());
         }
         return s;
@@ -110,7 +109,7 @@ public class Tournament implements CARE
      **/
     public String getChampionDetails(String nme)
     {
-       Champion champ = championHashMap.get(nme.toLowerCase());
+       Champion champ = reserveHashMap.get(nme.toLowerCase());
        if (champ != null) {
            return champ.toString();
        } else {
@@ -124,7 +123,7 @@ public class Tournament implements CARE
     */
     public boolean isInReserve(String nme)
     {
-        Champion champ = championHashMap.get(nme.toLowerCase());
+        Champion champ = reserveHashMap.get(nme.toLowerCase());
         if (champ != null && !isInViziersTeam(nme)) {
             return true;
         }
@@ -146,8 +145,8 @@ public class Tournament implements CARE
      **/        
     public int enterChampion(String nme)
     {
-        Champion champ = championHashMap.get(nme.toLowerCase());
-        if (champ == null) {
+        Champion res = reserveHashMap.get(nme.toLowerCase());
+        if (res == null) {
             return -1; // no such champion
         }
 
@@ -155,7 +154,7 @@ public class Tournament implements CARE
             return 1; // champion not in reserve
         }
 
-        int entryFee = calculateEntryFee(champ);
+        int entryFee = calculateEntryFee(res);
 
         if (entryFee > treasury) {
             return 2; // not enough money in the treasury
@@ -164,7 +163,9 @@ public class Tournament implements CARE
         // Update treasury and champion's state
         treasury -= entryFee;
 
+
         // Add logic for adding champion to vizier's team
+        teamHashMap.put(nme, res);
 
         return 0; // successfully entered champion
     }
@@ -211,7 +212,7 @@ public class Tournament implements CARE
      **/
     public int retireChampion(String nme)
     {
-        Champion champ = championHashMap.get(nme.toLowerCase());
+        Champion champ = reserveHashMap.get(nme.toLowerCase());
 
         if (champ == null) {
             return -1; // no such champion
@@ -222,8 +223,9 @@ public class Tournament implements CARE
         }
 
         // Logic to retire the champion from the vizier's team
-        // For this example, we'll remove the champion from the vizier's team (championHashMap)
-        championHashMap.remove(nme.toLowerCase());
+        teamHashMap.put(nme, champ);
+        // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
+        reserveHashMap.remove(nme.toLowerCase());
 
         return 0; // successfully retired champion
     }
@@ -248,7 +250,7 @@ public class Tournament implements CARE
         return s;
     }
     
-     /**Returns a String representation of the disquakified champions in the vizier's team
+     /**Returns a String representation of the disqualified champions in the vizier's team
      * or the message "No disqualified champions "
      * @return a String representation of the disqualified champions in the vizier's team
      **/
@@ -332,7 +334,7 @@ public class Tournament implements CARE
         Challenge chlg = challengeList.get(chalNo);
         ChallengeType Ctype = chlg.getChallengeType();
         int level = chlg.getSkillLevel();
-        for (Champion Camp : championHashMap.values()){
+        for (Champion Camp : teamHashMap.values()){
             int skill = Camp.getSkillLevel();
             if (Camp.compareTypes(Ctype)){
                 if(skill >= level ){
@@ -343,11 +345,10 @@ public class Tournament implements CARE
                     outcome = 1;
                     ChampionState championState = ChampionState.DISQUALIFIED;
                     treasury -= chlg.getReward();
-
                 }
             }
             else{
-                if (treasury == 0 && championHashMap.isEmpty()){
+                if (treasury == 0 && reserveHashMap.isEmpty()){
                     outcome = 2;
                 }
                 else {
@@ -377,18 +378,18 @@ public class Tournament implements CARE
         Champion krypton = new Wizard("Krypton", "fireballs", false, 8);
         Champion hedwig = new Wizard("Hedwig", "flying", true, 1);
 
-        championHashMap.put("ganfrank", ganfrank);
-        championHashMap.put("rudolf", rudolf);
-        championHashMap.put("elblond", elblond);
-        championHashMap.put("flimsi", flimsi);
-        championHashMap.put("drabina", drabina);
-        championHashMap.put("golum", golum);
-        championHashMap.put("argon", argon);
-        championHashMap.put("neon", neon);
-        championHashMap.put("xenon", xenon);
-        championHashMap.put("atlanta", atlanta);
-        championHashMap.put("krypton", krypton);
-        championHashMap.put("hedwig", hedwig);
+        reserveHashMap.put("ganfrank", ganfrank);
+        reserveHashMap.put("rudolf", rudolf);
+        reserveHashMap.put("elblond", elblond);
+        reserveHashMap.put("flimsi", flimsi);
+        reserveHashMap.put("drabina", drabina);
+        reserveHashMap.put("golum", golum);
+        reserveHashMap.put("argon", argon);
+        reserveHashMap.put("neon", neon);
+        reserveHashMap.put("xenon", xenon);
+        reserveHashMap.put("atlanta", atlanta);
+        reserveHashMap.put("krypton", krypton);
+        reserveHashMap.put("hedwig", hedwig);
     }
      
     private void setupChallenges()
