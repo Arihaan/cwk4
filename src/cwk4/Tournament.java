@@ -209,14 +209,15 @@ public class Tournament implements CARE
             return -1; // no such champion
         }
 
+        // Logic to retire the champion from the vizier's team
+        if (champ.getState() == ChampionState.DISQUALIFIED) {
+            return 1; // champion disqualified
+        }
+
          if (champ.getState() != ChampionState.ENTERED) {
             return 2; // champion not in the vizier's team
         }
 
-        // Logic to retire the champion from the vizier's team
-         if (champ.getState() == ChampionState.DISQUALIFIED) {
-            return 1; // champion disqualified
-        }
         // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
         champ.setState(ChampionState.WAITING);
         treasury += champ.getJoiningFee() / 2;
@@ -325,35 +326,27 @@ public class Tournament implements CARE
     public int meetChallenge(int chalNo)
     {
         //Nothing said about accepting challenges when bust
-        int outcome = -1 ;
-        Challenge chlg = challengeList.get(chalNo);
-        ChallengeType Ctype = chlg.getChallengeType();
-        int level = chlg.getSkillLevel();
-        for (Champion Camp : ChampionHashMap.values()){
-            int skill = Camp.getSkillLevel();
-            if (Camp.compareTypes(Ctype)){
-                if(skill >= level ){
-                    outcome = 0;
-                    treasury += chlg.getReward();
-                }
-                else {
-                    outcome = 1;
-                    ChampionState championState = ChampionState.DISQUALIFIED;
-                    String st = Camp.getName();
-                    treasury -= chlg.getReward();
-                }
-            }
-            else{
-                if (treasury == 0 && ChampionHashMap.isEmpty()){
-                    outcome = 2;
-                }
-                else {
-                    treasury -= chlg.getReward();
-                    outcome = 3;
-                }
-            }
+
+        if (!isChallenge(chalNo)) {
+            return -1;
         }
-        return outcome;
+
+        Challenge challenge = challengeList.get(chalNo-1);
+
+        Champion championForChallenge = getChampionForChallenge(challenge);
+        if (championForChallenge == null) {
+            treasury -= challenge.getReward();
+            return isDefeated() ? 3 : 2;
+        }
+
+        if (challenge.getSkillLevel() > championForChallenge.getSkillLevel()) {
+            treasury -= challenge.getReward();
+            championForChallenge.setState(ChampionState.DISQUALIFIED);
+            return isDefeated() ? 3 : 1;
+        }
+
+        treasury += challenge.getReward();
+        return 0;
     }
  
 
@@ -424,11 +417,17 @@ public class Tournament implements CARE
 //         return null;
 //     }
 //    
-//     private Champion getChampionForChallenge(Challenge chal)
-//     {
-//         
-//         return null;
-//     }
+     private Champion getChampionForChallenge(Challenge chal)
+     {
+         for (Champion champion : ChampionHashMap.values()) {
+             if(champion.getState() == ChampionState.ENTERED) {
+                 if (champion.compareTypes(chal.getChallengeType())){
+                     return champion;
+                 }
+             }
+         }
+         return null;
+     }
 
     //*******************************************************************************
     //*******************************************************************************
