@@ -223,9 +223,9 @@ public class Tournament implements CARE
         }
 
         // Logic to retire the champion from the vizier's team
-        teamHashMap.put(nme, champ);
+        teamHashMap.remove(nme, champ);
         // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
-        reserveHashMap.remove(nme.toLowerCase());
+        reserveHashMap.put(nme.toLowerCase());
 
         return 0; // successfully retired champion
     }
@@ -335,6 +335,7 @@ public class Tournament implements CARE
         ChallengeType Ctype = chlg.getChallengeType();
         int level = chlg.getSkillLevel();
         for (Champion Camp : teamHashMap.values()){
+            String st = Camp.getName();
             int skill = Camp.getSkillLevel();
             if (Camp.compareTypes(Ctype)){
                 if(skill >= level ){
@@ -344,6 +345,8 @@ public class Tournament implements CARE
                 else {
                     outcome = 1;
                     ChampionState championState = ChampionState.DISQUALIFIED;
+                    teamHashMap.remove(Camp);
+                    disqualifiedHashMap.put(st ,Camp);
                     treasury -= chlg.getReward();
                 }
             }
