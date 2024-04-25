@@ -19,8 +19,8 @@ public class Tournament implements CARE
     private int treasury = 1000;
 
     // collections for the challenges, waiting list for the champions and the vizier's team
-    private ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
-    private HashMap<String, Champion> ChampionHashMap = new HashMap<String, Champion>();
+    private ArrayList<Challenge> challengesList = new ArrayList<Challenge>();
+    private HashMap<String, Champion> championsHashMap = new HashMap<String, Champion>();
 
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
@@ -75,7 +75,7 @@ public class Tournament implements CARE
     public boolean isDefeated()
     {
         boolean champ_in_team = false;
-        for (Champion champ: ChampionHashMap.values()){
+        for (Champion champ: championsHashMap.values()){
             ChampionState currentChampState = champ.getState();
             if (currentChampState == ChampionState.ENTERED) {
                 champ_in_team = true;
@@ -99,7 +99,7 @@ public class Tournament implements CARE
     public String getReserve()
     {   
         String s = "************ Champions available in reserves********";
-        for (Champion champ: ChampionHashMap.values()){
+        for (Champion champ: championsHashMap.values()){
             ChampionState currentChampState = champ.getState();
             if (currentChampState == ChampionState.WAITING) {
                 s += "\n" + (champ.toString());
@@ -115,7 +115,7 @@ public class Tournament implements CARE
      **/
     public String getChampionDetails(String nme)
     {
-       Champion champ = ChampionHashMap.get(nme.toLowerCase());
+       Champion champ = championsHashMap.get(nme.toLowerCase());
        if (champ != null) {
            return champ.toString();
        } else {
@@ -129,7 +129,7 @@ public class Tournament implements CARE
     */
     public boolean isInReserve(String nme)
     {
-        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        Champion champ = championsHashMap.get(nme.toLowerCase());
         if (champ != null && champ.getState() == ChampionState.WAITING) {
             return true;
         }
@@ -151,7 +151,7 @@ public class Tournament implements CARE
      **/        
     public int enterChampion(String nme)
     {
-        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        Champion champ = championsHashMap.get(nme.toLowerCase());
         if (champ == null) {
             return -1; // no such champion
         }
@@ -185,7 +185,7 @@ public class Tournament implements CARE
      **/
     public boolean isInViziersTeam(String nme)
     {
-        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        Champion champ = championsHashMap.get(nme.toLowerCase());
         if (champ == null){
             return false;
         }
@@ -203,7 +203,7 @@ public class Tournament implements CARE
      **/
     public int retireChampion(String nme)
     {
-        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        Champion champ = championsHashMap.get(nme.toLowerCase());
 
         if (champ == null) {
             return -1; // no such champion
@@ -234,7 +234,7 @@ public class Tournament implements CARE
     {
         String header = "************ Vizier's Team of champions********";
         String s = "";
-        for (Champion chmp : ChampionHashMap.values()) {
+        for (Champion chmp : championsHashMap.values()) {
             if(chmp.getState() == ChampionState.ENTERED) {
                 s += "\n" +  chmp.toString() ;
             }
@@ -253,7 +253,7 @@ public class Tournament implements CARE
     {
         String header = "************ Vizier's Disqualified champions********";
         String s = "";
-        for (Champion chmp : ChampionHashMap.values()) {
+        for (Champion chmp : championsHashMap.values()) {
             if(chmp.getState() == ChampionState.DISQUALIFIED) {
                 s += "\n" +  chmp.toString() ;
             }
@@ -271,7 +271,7 @@ public class Tournament implements CARE
      **/
      public boolean isChallenge(int num)
      {
-         return num >= 1 && num <= challengeList.size();
+         return num >= 1 && num <= challengesList.size();
      }    
    
     /** Provides a String representation of an challenge given by 
@@ -283,7 +283,7 @@ public class Tournament implements CARE
     public String getChallenge(int num)
     {
         if (isChallenge(num)) {
-            return challengeList.get(num - 1).toString();
+            return challengesList.get(num - 1).toString();
         } else {
             return "\nNo such challenge";
         }
@@ -294,17 +294,15 @@ public class Tournament implements CARE
      **/
     public String getAllChallenges()
     {
-        String s = "\n************ All Challenges ************\n";
-        if (challengeList.isEmpty()) {
-            s += "No challenges available" + "\n";
+        String header = "\n************ All Challenges ************\n";
+        String s = "";
+        for (Challenge challenge : challengesList) {
+            s += challenge.toString()+ "\n";
         }
-        else{
-            for (Challenge challenge : challengeList) {
-                s += challenge.toString()+ "\n";
-            }
+        if (s.isEmpty()) {
+            s += "No challenges available";
         }
-
-        return s;
+        return header + s;
     }
     
     
@@ -325,13 +323,11 @@ public class Tournament implements CARE
      */ 
     public int meetChallenge(int chalNo)
     {
-        //Nothing said about accepting challenges when bust
-
         if (!isChallenge(chalNo)) {
             return -1;
         }
 
-        Challenge challenge = challengeList.get(chalNo-1);
+        Challenge challenge = challengesList.get(chalNo-1);
 
         Champion championForChallenge = getChampionForChallenge(challenge);
         if (championForChallenge == null) {
@@ -367,18 +363,18 @@ public class Tournament implements CARE
         Champion krypton = new Wizard("Krypton", "fireballs", false, 8);
         Champion hedwig = new Wizard("Hedwig", "flying", true, 1);
 
-        ChampionHashMap.put("ganfrank", ganfrank);
-        ChampionHashMap.put("rudolf", rudolf);
-        ChampionHashMap.put("elblond", elblond);
-        ChampionHashMap.put("flimsi", flimsi);
-        ChampionHashMap.put("drabina", drabina);
-        ChampionHashMap.put("golum", golum);
-        ChampionHashMap.put("argon", argon);
-        ChampionHashMap.put("neon", neon);
-        ChampionHashMap.put("xenon", xenon);
-        ChampionHashMap.put("atlanta", atlanta);
-        ChampionHashMap.put("krypton", krypton);
-        ChampionHashMap.put("hedwig", hedwig);
+        championsHashMap.put("ganfrank", ganfrank);
+        championsHashMap.put("rudolf", rudolf);
+        championsHashMap.put("elblond", elblond);
+        championsHashMap.put("flimsi", flimsi);
+        championsHashMap.put("drabina", drabina);
+        championsHashMap.put("golum", golum);
+        championsHashMap.put("argon", argon);
+        championsHashMap.put("neon", neon);
+        championsHashMap.put("xenon", xenon);
+        championsHashMap.put("atlanta", atlanta);
+        championsHashMap.put("krypton", krypton);
+        championsHashMap.put("hedwig", hedwig);
     }
      
     private void setupChallenges()
@@ -396,18 +392,18 @@ public class Tournament implements CARE
         Challenge challenge11 = new Challenge(11, ChallengeType.MAGIC, "Celt", 2, 250);
         Challenge challenge12 = new Challenge(12, ChallengeType.MYSTERY, "Celt", 1, 250);
 
-        challengeList.add(challenge1);
-        challengeList.add(challenge2);
-        challengeList.add(challenge3);
-        challengeList.add(challenge4);
-        challengeList.add(challenge5);
-        challengeList.add(challenge6);
-        challengeList.add(challenge7);
-        challengeList.add(challenge8);
-        challengeList.add(challenge9);
-        challengeList.add(challenge10);
-        challengeList.add(challenge11);
-        challengeList.add(challenge12);
+        challengesList.add(challenge1);
+        challengesList.add(challenge2);
+        challengesList.add(challenge3);
+        challengesList.add(challenge4);
+        challengesList.add(challenge5);
+        challengesList.add(challenge6);
+        challengesList.add(challenge7);
+        challengesList.add(challenge8);
+        challengesList.add(challenge9);
+        challengesList.add(challenge10);
+        challengesList.add(challenge11);
+        challengesList.add(challenge12);
     }
         
     // Possible useful private methods
@@ -416,10 +412,16 @@ public class Tournament implements CARE
 //         
 //         return null;
 //     }
-//    
+
+    /**
+     * Retrieves a champion that is in th team and suitable for the given challenge.
+     *
+     * @param chal The challenge for which a champion is being retrieved.
+     * @return The champion suitable for the given challenge, or null if no suitable champion is found.
+     */
      private Champion getChampionForChallenge(Challenge chal)
      {
-         for (Champion champion : ChampionHashMap.values()) {
+         for (Champion champion : championsHashMap.values()) {
              if(champion.getState() == ChampionState.ENTERED) {
                  if (champion.compareTypes(chal.getChallengeType())){
                      return champion;
@@ -459,7 +461,7 @@ public class Tournament implements CARE
         String chName = st.nextToken();
         int chLevel = Integer.parseInt(st.nextToken());
         int chReward = Integer.parseInt(st.nextToken());
-        challengeList.add(new Challenge(chNo, chType, chName, chLevel, chReward));
+        challengesList.add(new Challenge(chNo, chType, chName, chLevel, chReward));
     }
     
      /** reads all information about the game from the specified file 
