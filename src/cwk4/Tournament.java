@@ -208,12 +208,12 @@ public class Tournament implements CARE
             return -1; // no such champion
         }
 
-        if (champ.getState() != ChampionState.ENTERED) {
+         if (champ.getState() != ChampionState.ENTERED) {
             return 2; // champion not in the vizier's team
         }
 
         // Logic to retire the champion from the vizier's team
-        if (champ.getState() == ChampionState.DISQUALIFIED) {
+         if (champ.getState() == ChampionState.DISQUALIFIED) {
             return 1; // champion disqualified
         }
         // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
@@ -328,7 +328,6 @@ public class Tournament implements CARE
         ChallengeType Ctype = chlg.getChallengeType();
         int level = chlg.getSkillLevel();
         for (Champion Camp : ChampionHashMap.values()){
-            String st = Camp.getName();
             int skill = Camp.getSkillLevel();
             if (Camp.compareTypes(Ctype)){
                 if(skill >= level ){
@@ -338,8 +337,7 @@ public class Tournament implements CARE
                 else {
                     outcome = 1;
                     ChampionState championState = ChampionState.DISQUALIFIED;
-                    ChampionHashMap.remove(Camp);
-                    ChampionHashMap.put(st ,Camp);
+                    String st = Camp.getName();
                     treasury -= chlg.getReward();
                 }
             }
