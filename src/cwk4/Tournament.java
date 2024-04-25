@@ -60,10 +60,8 @@ public class Tournament implements CARE
     {
         String s = "\nVizier: " + vizier +
                     "\nTreasury: " + treasury +
-                    "\n" + getReserve() +
-                    "\n" + getTeam() +
-                    "\n" + getDisqualified() +
-                    "\n" + getAllChallenges() ;
+                    "\nStatus: " + (isDefeated() ? "Defeated" : "Is OK") +
+                    "\nTeam: " +   getTeam();
         
         return s;
     }
@@ -76,7 +74,7 @@ public class Tournament implements CARE
      */
     public boolean isDefeated()
     {
-        Boolean champ_in_team = false;
+        boolean champ_in_team = false;
         for (Champion champ: ChampionHashMap.values()){
             ChampionState currentChampState = champ.getState();
             if (currentChampState == ChampionState.ENTERED) {
@@ -188,6 +186,9 @@ public class Tournament implements CARE
     public boolean isInViziersTeam(String nme)
     {
         Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        if (champ == null){
+            return false;
+        }
         return (champ.getState() == ChampionState.ENTERED);
     }
     
@@ -218,6 +219,7 @@ public class Tournament implements CARE
         }
         // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
         champ.setState(ChampionState.WAITING);
+        treasury += champ.getJoiningFee() / 2;
         return 0; // successfully retired champion
     }
     

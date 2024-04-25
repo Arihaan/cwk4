@@ -45,10 +45,10 @@ public class GameGUI
         myFrame.add(eastPanel, BorderLayout.EAST);
         // set panel layout and add components
         eastPanel.setLayout(new GridLayout(4,1));
+        eastPanel.add(viewBtn);
         eastPanel.add(meetBtn);
         eastPanel.add(clearBtn);
         eastPanel.add(quitBtn);
-        eastPanel.add(viewBtn);
 
         clearBtn.addActionListener(new ClearBtnHandler());
         meetBtn.addActionListener(new MeetBtnHandler());
