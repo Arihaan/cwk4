@@ -344,6 +344,12 @@ public class Tournament implements CARE
 
     //****************** private methods for Task 3 functionality*******************
     //*******************************************************************************
+    /**
+     * Sets up the initial champions in the game and adds them to the championsHashMap.
+     * Each champion is instantiated with specific attributes and added to the hashmap with their name as the key.
+     * The championsHashMap is used to store all available champions in the game.
+     * The setupChampions method should be called at the beginning of the game to initialize the champions.
+     */
     private void setupChampions()
     {
         Champion ganfrank = new Wizard("Ganfrank", "transmutation", true, 7);
@@ -372,7 +378,13 @@ public class Tournament implements CARE
         championsHashMap.put("krypton", krypton);
         championsHashMap.put("hedwig", hedwig);
     }
-     
+
+    /**
+     * Sets up the initial challenges in the game and adds them to the challengesList.
+     * Each challenge is instantiated with specific attributes and added to the list.
+     * The challengesList is used to store all available challenges in the game.
+     * The setupChallenges method should be called at the beginning of the game to initialize the challenges.
+     */
     private void setupChallenges()
     {
         Challenge challenge1 = new Challenge(1, ChallengeType.MAGIC, "Borg", 3, 100);
