@@ -79,6 +79,7 @@ public class Tournament implements CARE
             ChampionState currentChampState = champ.getState();
             if (currentChampState == ChampionState.ENTERED) {
                 champ_in_team = true;
+                break;
             }
         }
         return treasury < 0 && !champ_in_team;
@@ -102,7 +103,7 @@ public class Tournament implements CARE
         for (Champion champ: championsHashMap.values()){
             ChampionState currentChampState = champ.getState();
             if (currentChampState == ChampionState.WAITING) {
-                s += "\n" + (champ.toString());
+                s += "\n" + champ;
             }
         }
         return s;
@@ -130,12 +131,7 @@ public class Tournament implements CARE
     public boolean isInReserve(String nme)
     {
         Champion champ = championsHashMap.get(nme.toLowerCase());
-        if (champ != null && champ.getState() == ChampionState.WAITING) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return champ != null && champ.getState() == ChampionState.WAITING;
     }
  
     // ***************** Team champions ************************   
@@ -236,7 +232,7 @@ public class Tournament implements CARE
         String s = "";
         for (Champion chmp : championsHashMap.values()) {
             if(chmp.getState() == ChampionState.ENTERED) {
-                s += "\n" +  chmp.toString() ;
+                s += "\n" +  chmp;
             }
         }
         if (s.isEmpty()){
@@ -255,7 +251,7 @@ public class Tournament implements CARE
         String s = "";
         for (Champion chmp : championsHashMap.values()) {
             if(chmp.getState() == ChampionState.DISQUALIFIED) {
-                s += "\n" +  chmp.toString() ;
+                s += "\n" +  chmp;
             }
         }
         if (s.isEmpty()){
@@ -274,7 +270,7 @@ public class Tournament implements CARE
          return num >= 1 && num <= challengesList.size();
      }    
    
-    /** Provides a String representation of an challenge given by 
+    /** Provides a String representation of a challenge given by
      * the challenge number
      * @param num the number of the challenge
      * @return returns a String representation of a challenge given by 
@@ -409,7 +405,7 @@ public class Tournament implements CARE
     // Possible useful private methods
 //     private Challenge getAChallenge(int no)
 //     {
-//         
+//
 //         return null;
 //     }
 
@@ -433,9 +429,9 @@ public class Tournament implements CARE
 
     //*******************************************************************************
     //*******************************************************************************
-  
-    /************************ Task 3.5 ************************************************/  
-    
+
+    //************************ Task 3.5 ************************************************/
+
     // ***************   file write/read  *********************
     /**
      * reads challenges from a comma-separated textfile and stores in the game
@@ -454,6 +450,14 @@ public class Tournament implements CARE
         catch (Exception e) {e.printStackTrace();}
     }
 
+    /**
+     * Parses a line of comma-separated data to create a new Challenge object
+     * and adds it to the challenges list.
+     *
+     * @param line A string containing comma-separated data representing a Challenge.
+     *             The format of the data should be: "challengeNumber,challengeType,challengeName,challengeLevel,challengeReward".
+     *             Example: "1,Magic,Borg,3,100"
+     */
     private void readChallenge(String line) {
         StringTokenizer st = new StringTokenizer (line, ","); // comma-separated data
         int chNo = Integer.parseInt(st.nextToken());
@@ -471,7 +475,7 @@ public class Tournament implements CARE
      */
      public Tournament loadGame(String fname)
     {   // uses object serialisation
-        Tournament tournament = null;
+        Tournament tournament;
         try {
             FileInputStream fis = new FileInputStream(fname);
             ObjectInputStream ois = new ObjectInputStream(fis);
