@@ -210,7 +210,7 @@ public class Tournament implements CARE
      **/
     public int retireChampion(String nme)
     {
-        Champion champ = reserveHashMap.get(nme.toLowerCase());
+        Champion champ = ChampionHashMap.get(nme.toLowerCase());
 
         if (champ == null) {
             return -1; // no such champion
@@ -236,16 +236,17 @@ public class Tournament implements CARE
      **/
     public String getTeam()
     {
-        String s = "************ Vizier's Team of champions********";
-        if (teamHashMap.isEmpty()) {
-            s += "\n"+"No champions entered";
-        }
-        else{
-            for (Champion chmp : teamHashMap.values()) {
-                s += chmp.toString() + "\n" ;
+        String header = "************ Vizier's Team of champions********";
+        String s = "";
+        for (Champion chmp : ChampionHashMap.values()) {
+            if(chmp.getState() == ChampionState.ENTERED) {
+                s += "\n" +  chmp.toString() ;
             }
         }
-        return s;
+        if (s.isEmpty()){
+            s = "\nNo champions entered";
+        }
+        return header + s;
     }
     
      /**Returns a String representation of the disqualified champions in the vizier's team
@@ -254,16 +255,17 @@ public class Tournament implements CARE
      **/
     public String getDisqualified()
     {
-        String s = "************ Vizier's Disqualified champions********";
-        if (disqualifiedHashMap.isEmpty()) {
-            s += "\n"+"No champions disqualified";
-        }
-        for (Champion chmp : disqualifiedHashMap.values()) {
+        String header = "************ Vizier's Disqualified champions********";
+        String s = "";
+        for (Champion chmp : ChampionHashMap.values()) {
             if(chmp.getState() == ChampionState.DISQUALIFIED) {
-                s += chmp.toString() + "\n";
+                s += "\n" +  chmp.toString() ;
             }
         }
-        return s;
+        if (s.isEmpty()){
+            s = "\nNo disqualified champions";
+        }
+        return header + s;
     }
     
 //**********************Challenges************************* 
@@ -332,7 +334,7 @@ public class Tournament implements CARE
         Challenge chlg = challengeList.get(chalNo);
         ChallengeType Ctype = chlg.getChallengeType();
         int level = chlg.getSkillLevel();
-        for (Champion Camp : teamHashMap.values()){
+        for (Champion Camp : ChampionHashMap.values()){
             String st = Camp.getName();
             int skill = Camp.getSkillLevel();
             if (Camp.compareTypes(Ctype)){
@@ -343,13 +345,13 @@ public class Tournament implements CARE
                 else {
                     outcome = 1;
                     ChampionState championState = ChampionState.DISQUALIFIED;
-                    teamHashMap.remove(Camp);
-                    disqualifiedHashMap.put(st ,Camp);
+                    ChampionHashMap.remove(Camp);
+                    ChampionHashMap.put(st ,Camp);
                     treasury -= chlg.getReward();
                 }
             }
             else{
-                if (treasury == 0 && reserveHashMap.isEmpty()){
+                if (treasury == 0 && ChampionHashMap.isEmpty()){
                     outcome = 2;
                 }
                 else {

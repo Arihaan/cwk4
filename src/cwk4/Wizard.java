@@ -10,10 +10,6 @@ public class Wizard extends Champion{
         this.isNecromant = isNecromant;
     }
 
-    public String getSpell() {
-        return spell;
-    }
-
     public boolean isNecromant() {
         return isNecromant;
     }

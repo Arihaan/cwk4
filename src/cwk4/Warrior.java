@@ -12,6 +12,7 @@ public class Warrior extends Champion{
         return weapon;
     }
 
+
     @Override
     public String toString() {
         return super.toString() +
