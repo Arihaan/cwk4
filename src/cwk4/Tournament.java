@@ -111,7 +111,7 @@ public class Tournament implements CARE
     
         
     /** Returns details of the champion with the given name. 
-     * Champion names are unique.
+     * @param nme champion's name
      * @return details of the champion with the given name
      **/
     public String getChampionDetails(String nme)

@@ -20,13 +20,13 @@ public class Dragon extends Champion{
     }
 
     @Override
-    /**Returns a String representation of the Champion along with the following attributes:
+    /** Returns a String representation of the Champion along with the following attributes:
      * if the dragon talks or not
-     * Champion type i.e Dragon.
+     * Champion type i.e. Dragon.
      *
      * @return a String representation of the Champion along with the following attributes:
      * if the dragon talks or not
-     * Champion type i.e Dragon.
+     * Champion type i.e. Dragon.
      **/
     public String toString() {
         return super.toString() +

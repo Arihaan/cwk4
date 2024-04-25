@@ -24,15 +24,15 @@ public class Wizard extends Champion{
     }
 
     @Override
-    /**Returns a String representation of the Champion along with the following attributes:
+    /** Returns a String representation of the Champion along with the following attributes:
      * the Spell speciality,
      * whether Wizard is a Necromant or not and
-     * Champion type i.e Wizard.
+     * Champion type i.e. Wizard.
      *
      * @return a String representation of the Champion along with the following attributes:
      * the Spell speciality,
      * whether Wizard is a Necromant or not and
-     * Champion type i.e Wizard.
+     * Champion type i.e. Wizard.
      **/
     public String toString() {
         return super.toString() +
