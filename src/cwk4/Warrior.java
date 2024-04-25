@@ -2,8 +2,8 @@ package cwk4;
 
 /**
  * class Warrior - extension of class Champion
- * @author team21
- * @version 1
+ * @author TEAM21
+ * @version 1.0
  */
 
 public class Warrior extends Champion{

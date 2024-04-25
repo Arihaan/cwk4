@@ -5,7 +5,7 @@ import java.io.*;
  * This interface specifies the behaviour expected from CARE
  * as required for 5COM2007 Cwk 4
  * 
- * @author Team 21
+ * @author Team21
  * @version 1.0
  */
 

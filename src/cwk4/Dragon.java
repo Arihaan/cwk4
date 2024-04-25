@@ -2,7 +2,7 @@ package cwk4;
 /**
  * class Dragon - extension of class Champion
  *
- * @author team21
+ * @author TEAM21
  * @version 1
  */
 public class Dragon extends Champion{
