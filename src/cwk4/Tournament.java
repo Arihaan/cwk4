@@ -20,9 +20,7 @@ public class Tournament implements CARE
 
     // collections for the challenges, waiting list for the champions and the vizier's team
     private ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
-    private HashMap<String, Champion> reserveHashMap = new HashMap<String, Champion>();
-    private HashMap<String, Champion> disqualifiedHashMap = new HashMap<String, Champion>();
-    private HashMap<String, Champion> teamHashMap = new HashMap<String, Champion>();
+    private HashMap<String, Champion> ChampionHashMap = new HashMap<String, Champion>();
 
 //**************** CARE ************************** 
     /** Constructor requires the name of the vizier
@@ -381,18 +379,18 @@ public class Tournament implements CARE
         Champion krypton = new Wizard("Krypton", "fireballs", false, 8);
         Champion hedwig = new Wizard("Hedwig", "flying", true, 1);
 
-        reserveHashMap.put("ganfrank", ganfrank);
-        reserveHashMap.put("rudolf", rudolf);
-        reserveHashMap.put("elblond", elblond);
-        reserveHashMap.put("flimsi", flimsi);
-        reserveHashMap.put("drabina", drabina);
-        reserveHashMap.put("golum", golum);
-        reserveHashMap.put("argon", argon);
-        reserveHashMap.put("neon", neon);
-        reserveHashMap.put("xenon", xenon);
-        reserveHashMap.put("atlanta", atlanta);
-        reserveHashMap.put("krypton", krypton);
-        reserveHashMap.put("hedwig", hedwig);
+        ChampionHashMap.put("ganfrank", ganfrank);
+        ChampionHashMap.put("rudolf", rudolf);
+        ChampionHashMap.put("elblond", elblond);
+        ChampionHashMap.put("flimsi", flimsi);
+        ChampionHashMap.put("drabina", drabina);
+        ChampionHashMap.put("golum", golum);
+        ChampionHashMap.put("argon", argon);
+        ChampionHashMap.put("neon", neon);
+        ChampionHashMap.put("xenon", xenon);
+        ChampionHashMap.put("atlanta", atlanta);
+        ChampionHashMap.put("krypton", krypton);
+        ChampionHashMap.put("hedwig", hedwig);
     }
      
     private void setupChallenges()
