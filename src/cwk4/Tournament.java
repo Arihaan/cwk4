@@ -76,7 +76,14 @@ public class Tournament implements CARE
      */
     public boolean isDefeated()
     {
-        return treasury == 0 && teamHashMap.isEmpty();
+        Boolean champ_in_team = false;
+        for (Champion champ: ChampionHashMap.values()){
+            ChampionState currentChampState = champ.getState();
+            if (currentChampState == ChampionState.ENTERED) {
+                champ_in_team = true;
+            }
+        }
+        return treasury < 0 && !champ_in_team;
     }
     
     /** returns the amount of money in the Treasury
@@ -94,8 +101,11 @@ public class Tournament implements CARE
     public String getReserve()
     {   
         String s = "************ Champions available in reserves********";
-        for (Champion chmp : reserveHashMap.values()) {
-            s += "\n" + (chmp.toString());
+        for (Champion champ: ChampionHashMap.values()){
+            ChampionState currentChampState = champ.getState();
+            if (currentChampState == ChampionState.WAITING) {
+                s += "\n" + (champ.toString());
+            }
         }
         return s;
     }
@@ -107,7 +117,7 @@ public class Tournament implements CARE
      **/
     public String getChampionDetails(String nme)
     {
-       Champion champ = reserveHashMap.get(nme.toLowerCase());
+       Champion champ = ChampionHashMap.get(nme.toLowerCase());
        if (champ != null) {
            return champ.toString();
        } else {
@@ -121,8 +131,8 @@ public class Tournament implements CARE
     */
     public boolean isInReserve(String nme)
     {
-        Champion champ = reserveHashMap.get(nme.toLowerCase());
-        if (champ != null && !isInViziersTeam(nme)) {
+        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        if (champ != null && champ.getState() == ChampionState.WAITING) {
             return true;
         }
         else {
@@ -143,16 +153,16 @@ public class Tournament implements CARE
      **/        
     public int enterChampion(String nme)
     {
-        Champion res = reserveHashMap.get(nme.toLowerCase());
-        if (res == null) {
+        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        if (champ == null) {
             return -1; // no such champion
         }
 
-        if (!isInReserve(nme)) {
+        if (champ.getState() != ChampionState.WAITING) {
             return 1; // champion not in reserve
         }
 
-        int entryFee = calculateEntryFee(res);
+        int entryFee = champ.getJoiningFee();
 
         if (entryFee > treasury) {
             return 2; // not enough money in the treasury
@@ -163,28 +173,9 @@ public class Tournament implements CARE
 
 
         // Add logic for adding champion to vizier's team
-        teamHashMap.put(nme, res);
+        champ.setState(ChampionState.ENTERED);
 
         return 0; // successfully entered champion
-    }
-
-    private int calculateEntryFee(Champion champ) {
-        if (champ instanceof Wizard) {
-            Wizard wizard = (Wizard) champ;
-            int baseFee = 300;
-            if (wizard.isNecromant()) {
-                return baseFee + 100; // 400 gulden for necromancer wizards
-            } else {
-                return baseFee; // 300 gulden for regular wizards
-            }
-        } else if (champ instanceof Warrior) {
-            Warrior warrior = (Warrior) champ;
-            return warrior.getJoiningFee();
-        } else if (champ instanceof Dragon) {
-            return 500; // fixed entry fee for dragons
-        }
-
-        return 0;
     }
 
 
@@ -196,7 +187,8 @@ public class Tournament implements CARE
      **/
     public boolean isInViziersTeam(String nme)
     {
-        return teamHashMap.containsKey(nme.toLowerCase());
+        Champion champ = ChampionHashMap.get(nme.toLowerCase());
+        return (champ.getState() == ChampionState.ENTERED);
     }
     
     /** Removes a champion from the team back to the reserves (if they are in the team)
@@ -216,15 +208,16 @@ public class Tournament implements CARE
             return -1; // no such champion
         }
 
-        if (!isInViziersTeam(nme)) {
+        if (champ.getState() != ChampionState.ENTERED) {
             return 2; // champion not in the vizier's team
         }
 
         // Logic to retire the champion from the vizier's team
-        teamHashMap.remove(nme, champ);
+        if (champ.getState() == ChampionState.DISQUALIFIED) {
+            return 1; // champion disqualified
+        }
         // For this example, we'll remove the champion from the vizier's team (reserveHashMap)
-        reserveHashMap.put(nme.toLowerCase());
-
+        champ.setState(ChampionState.WAITING);
         return 0; // successfully retired champion
     }
     
