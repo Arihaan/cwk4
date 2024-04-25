@@ -164,7 +164,7 @@ public class GameUI
     }
 
     private String processEnterChampionResult(int res) {
-        String out;
+        String out = "No such result";
         if (res == -1) {
             out = "No such champion";
         }
@@ -176,14 +176,12 @@ public class GameUI
         }
         if (res == 2) {
             out = "Not enough money in the treasury";
-        } else {
-            out = "No such result";
         }
         return out;
     }
 
     private String processRetirementResult(int res) {
-        String out;
+        String out = "No such result";
         if (res == -1) {
             out = "No such champion";
         }
@@ -195,9 +193,6 @@ public class GameUI
         }
         if (res == 2) {
             out = "Champion you are trying to retire is not in your team";
-        }
-        else {
-            out = "No such result";
         }
         return out;
     }

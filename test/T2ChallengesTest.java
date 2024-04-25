@@ -108,6 +108,12 @@ public class T2ChallengesTest {
         boolean result = game.isChallenge(0);
         assertFalse(result); 
     }
+
+    @Test
+    public void isChallengeTestEdging(){
+        boolean result = game.isChallenge(12);
+        assertTrue(result);
+    }
     @Test
     public void getChallengeTest(){
         String result = game.getChallenge(3);

@@ -271,7 +271,7 @@ public class Tournament implements CARE
      **/
      public boolean isChallenge(int num)
      {
-         return num > 0 && num < challengeList.size();
+         return num >= 1 && num <= challengeList.size();
      }    
    
     /** Provides a String representation of an challenge given by 
@@ -455,7 +455,7 @@ public class Tournament implements CARE
     private void readChallenge(String line) {
         StringTokenizer st = new StringTokenizer (line, ","); // comma-separated data
         int chNo = Integer.parseInt(st.nextToken());
-        ChallengeType chType = ChallengeType.valueOf(st.nextToken());
+        ChallengeType chType = ChallengeType.valueOf(st.nextToken().toUpperCase());
         String chName = st.nextToken();
         int chLevel = Integer.parseInt(st.nextToken());
         int chReward = Integer.parseInt(st.nextToken());
@@ -475,7 +475,9 @@ public class Tournament implements CARE
             ObjectInputStream ois = new ObjectInputStream(fis);
             tournament = (Tournament) ois.readObject();
         }
-        catch (Exception e) {e.printStackTrace();}
+        catch (Exception e) {
+            return null;
+        }
 
         return tournament;
     }

@@ -1,10 +1,7 @@
 import cwk4.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -117,6 +114,22 @@ public class T3ChampionsTest {
     
     //Why were those chosen? You can add more but is it worth it ?
 
-         
+    @Test
+    public void ChampionDisqualifiedTest() {
+        String[] xx = {"Flimsi","2", "bow", "200", "Warrior"};
+        game.enterChampion("Flimsi");
+        game.meetChallenge(2);
+        String result = game.getDisqualified();
 
+        assertTrue(containsText(result, xx));
+    }
+
+    @Test
+    public void RecruitingDisqualifiedChampionTest() {
+        int expected = 1;
+        game.enterChampion("Flimsi");
+        game.meetChallenge(2);
+        int result = game.enterChampion("Flimsi");
+        assertEquals(expected, result);
+    }
 }
